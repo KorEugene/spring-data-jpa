@@ -2,6 +2,7 @@ package ru.geekbrains.springdatajpa.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.springdatajpa.dto.ProductDto;
 import ru.geekbrains.springdatajpa.model.Product;
 import ru.geekbrains.springdatajpa.service.ProductService;
 
@@ -14,28 +15,28 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/products")
-    public List<Product> findAll() {
+    public List<ProductDto> findAll() {
         return productService.findAll();
     }
 
     @GetMapping(value = "/products/filter", params = "max_price")
-    public List<Product> findAllByMaxPrice(@RequestParam(name = "max_price") int maxPrice) {
+    public List<ProductDto> findAllByMaxPrice(@RequestParam(name = "max_price") int maxPrice) {
         return productService.findAllByMaxPrice(maxPrice);
     }
 
     @GetMapping(value = "/products/filter", params = "min_price")
-    public List<Product> findAllByMinPrice(@RequestParam(name = "min_price") int minPrice) {
+    public List<ProductDto> findAllByMinPrice(@RequestParam(name = "min_price") int minPrice) {
         return productService.findAllByMinPrice(minPrice);
     }
 
     @GetMapping(value = "/products/filter", params = {"max_price", "min_price"})
-    public List<Product> findAllByPriceBetween(@RequestParam(name = "min_price") int minPrice, @RequestParam(name = "max_price") int maxPrice) {
+    public List<ProductDto> findAllByPriceBetween(@RequestParam(name = "min_price") int minPrice, @RequestParam(name = "max_price") int maxPrice) {
         return productService.findAllByPriceBetween(minPrice, maxPrice);
     }
 
     @GetMapping("/products/{id}")
-    public Product findById(@PathVariable Long id) {
-        return productService.findById(id).orElseGet(() -> new Product("wrong ID", 0));
+    public ProductDto findById(@PathVariable Long id) {
+        return productService.findById(id);
     }
 
     @PostMapping("/products")
