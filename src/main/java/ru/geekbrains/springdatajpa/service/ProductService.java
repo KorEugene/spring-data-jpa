@@ -43,8 +43,9 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public Product save(Product product) {
-        return productRepository.save(product);
+    public ProductDto save(ProductDto productDto) {
+        Product product = new Product(productDto.getTitle(), productDto.getPrice());
+        return new ProductDto(productRepository.save(product));
     }
 
     public void delete(Long id) {

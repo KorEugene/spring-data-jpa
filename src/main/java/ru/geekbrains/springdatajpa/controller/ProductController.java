@@ -3,7 +3,6 @@ package ru.geekbrains.springdatajpa.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springdatajpa.dto.ProductDto;
-import ru.geekbrains.springdatajpa.model.Product;
 import ru.geekbrains.springdatajpa.service.ProductService;
 
 import java.util.List;
@@ -40,10 +39,8 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public String saveProduct(@RequestParam String title, @RequestParam int price) {
-        Product product = new Product(title, price);
-        productService.save(product);
-        return "redirect:/products";
+    public ProductDto saveProduct(@RequestBody ProductDto productDto) {
+        return productService.save(productDto);
     }
 
     @GetMapping("/products/delete/{id}")
